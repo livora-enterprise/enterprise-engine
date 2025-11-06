@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  # LocalStack for local AWS development
+  localstack:
+    image: localstack/localstack:latest
+    container_name: livora-localstack
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+    environment:
+      - DEBUG=1
+      - SERVICES=dynamodb,kinesis,s3,kms,cloudwatch,logs,sns,iam,ec2
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+    volumes:
+      - "${TMPDIR}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    healthcheck:
+      test: ["CMD", "awslocal", "ec2", "describe-instances"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: livora-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+
+  # PostgreSQL for CRM database
+  postgres:
+    image: postgres:16-alpine
+    container_name: livora-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=livora_dev
+      - POSTGRES_PASSWORD=dev_password
+      - POSTGRES_DB=livora_engine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U livora_dev"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: livora-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_REGION=us-east-1
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://livora_dev:dev_password@postgres:5432/livora_engine
+    depends_on:
+      localstack:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend/src:/app/backend/src
+      - ./packages:/app/packages
+    command: npm run dev -w @livora/backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  default:
+    name: livora-network

@@ -1,0 +1,33 @@
+{
+  "name": "@livora/enterprise-engine",
+  "version": "0.1.0",
+  "description": "Livora Enterprise Intelligence and Automation Engine",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "backend",
+    "infrastructure",
+    "frontend"
+  ],
+  "scripts": {
+    "bootstrap": "npm install && npm run build",
+    "build": "npm run build --workspaces",
+    "dev": "npm run dev --workspaces",
+    "test": "npm test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "deploy:dev": "cd infrastructure && cdk deploy --profile dev-profile",
+    "deploy:staging": "cd infrastructure && cdk deploy --profile staging-profile",
+    "deploy:prod": "cd infrastructure && cdk deploy --profile prod-profile",
+    "cdk:synth": "cd infrastructure && cdk synth",
+    "cdk:diff": "cd infrastructure && cdk diff",
+    "cdk:bootstrap": "cd infrastructure && cdk bootstrap aws://$(aws sts get-caller-identity --query Account --output text)/us-east-1"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}

@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+*.tgz
+npm-debug.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+
+# CDK
+cdk.out/
+*.d.ts
+*.js
+!jest.config.js
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# AWS
+.aws/credentials
+.aws/config
+cdk.context.json
+
+# Build outputs
+dist/
+build/
+out/
+
+# Logs
+logs/
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary
+temp/
+tmp/
+*.tmp
