@@ -120,12 +120,16 @@ livora-enterprise/
 │   ├── ci.yml                        # Test, lint, build
 │   └── deploy-dev.yml                # Deploy to AWS
 │
-└── 📚  Documentation
+└── 📚  docs/                         # Comprehensive documentation
     ├── ROADMAP.md                    # 50-week, 16-phase plan
     ├── PHASE_0_GUIDE.md              # Detailed Phase 0 instructions
     ├── PHASE_0_CHECKLIST.md          # Day-by-day checklist
-    ├── 1.md - 5.md                   # Architecture docs
-    └── README.md                     # This file
+    ├── PHASE_0_COMPLETE.md           # Phase 0 completion summary
+    ├── BUILD_COMPLETE_BLUEPRINT.md   # Technical blueprint
+    ├── PRE_PHASE_0_DECISIONS.md      # Design decisions
+    ├── QUICK_START.md                # Quick reference
+    ├── 1.md - 5.md                   # Architecture documents
+    └── README.md                     # Root readme (this file)
 ```
 
 ---
@@ -281,16 +285,22 @@ redis-cli -h localhost ping
 
 ## 📚 Documentation
 
+All documentation is organized in the `docs/` folder to prevent naming conflicts and keep the root clean.
+
 | Document | Purpose | Audience |
 |----------|---------|----------|
-| **[ROADMAP.md](./ROADMAP.md)** | Complete 16-phase, 50-week plan | Engineering team |
-| **[PHASE_0_GUIDE.md](./PHASE_0_GUIDE.md)** | Detailed Phase 0 setup instructions | Engineers executing Phase 0 |
-| **[PHASE_0_CHECKLIST.md](./PHASE_0_CHECKLIST.md)** | Day-by-day checklist | Daily reference |
-| **[1.md](./1.md)** | Architecture blueprint | Tech leads, architects |
-| **[2.md](./2.md)** | System workflows | Developers |
-| **[3.md](./3.md)** | Frontend design system | Frontend engineers |
-| **[4.md](./4.md)** | Backend APIs & SDKs | Backend engineers |
-| **[5.md](./5.md)** | Operational procedures | DevOps, SRE |
+| **[ROADMAP.md](./docs/ROADMAP.md)** | Complete 16-phase, 50-week plan | Engineering team |
+| **[PHASE_0_GUIDE.md](./docs/PHASE_0_GUIDE.md)** | Detailed Phase 0 setup instructions | Engineers executing Phase 0 |
+| **[PHASE_0_CHECKLIST.md](./docs/PHASE_0_CHECKLIST.md)** | Day-by-day checklist | Daily reference |
+| **[PHASE_0_COMPLETE.md](./docs/PHASE_0_COMPLETE.md)** | Phase 0 completion summary | Completion reference |
+| **[BUILD_COMPLETE_BLUEPRINT.md](./docs/BUILD_COMPLETE_BLUEPRINT.md)** | Technical blueprint | Tech leads |
+| **[PRE_PHASE_0_DECISIONS.md](./docs/PRE_PHASE_0_DECISIONS.md)** | Design decisions & rationale | Architects |
+| **[QUICK_START.md](./docs/QUICK_START.md)** | Quick reference guide | Quick lookup |
+| **[1.md](./docs/1.md)** | Architecture blueprint | Tech leads, architects |
+| **[2.md](./docs/2.md)** | System workflows | Developers |
+| **[3.md](./docs/3.md)** | Frontend design system | Frontend engineers |
+| **[4.md](./docs/4.md)** | Backend APIs & SDKs | Backend engineers |
+| **[5.md](./docs/5.md)** | Operational procedures | DevOps, SRE |
 
 ---
 
@@ -377,7 +387,7 @@ psql -h localhost -U livora_dev -d livora_engine
 redis-cli -h localhost
 ```
 
-See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for more details.
+See [PHASE_0_GUIDE.md](./docs/PHASE_0_GUIDE.md) for more troubleshooting details.
 
 ---
 
