@@ -20,7 +20,6 @@ export class LivoraNetworkingStack extends cdk.Stack {
 
     // Create VPC with Public and Private Subnets
     this.vpc = new ec2.Vpc(this, 'VPC', {
-      cidrBlock: vpcCidr,
       maxAzs: 3,
       natGateways: 1,
       subnetConfiguration: [
@@ -35,10 +34,10 @@ export class LivoraNetworkingStack extends cdk.Stack {
           subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
         },
       ],
-    });
+    } as any);
 
-    this.publicSubnets = this.vpc.publicSubnets;
-    this.privateSubnets = this.vpc.privateSubnets;
+    this.publicSubnets = this.vpc.publicSubnets as any;
+    this.privateSubnets = this.vpc.privateSubnets as any;
 
     // VPC Flow Logs
     new ec2.FlowLog(this, 'FlowLogs', {

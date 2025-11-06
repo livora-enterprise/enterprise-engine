@@ -23,7 +23,7 @@ export class LivoraClient {
   private baseURL: string;
   private eventBuffer: LivoraEvent[] = [];
   private bufferSize: number = 100;
-  private flushInterval: NodeJS.Timer | null = null;
+  private flushInterval: any = null;
 
   constructor(config: LivoraConfig) {
     this.apiKey = config.apiKey;
